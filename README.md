@@ -49,10 +49,10 @@ Key questions I was looking to learn about:
 - Correlation between each race and school attendance per school? (and per district?)
 - Correlation between each race and grade level proficiency per school? (and per district?)
 
-### Data Analysis
+### Data Analysis Code Snippet 1
 
 ```SQL
-# Calculate Mean, Standard Deviation, Varriance, and Correlation between attendance vs english exam proficiency
+# Calculate Mean, Standard Deviation, Variance, and Correlation between attendance vs english exam proficiency
 # and attendance vs math exam proficiency
 WITH AvgValues AS (
   SELECT 
@@ -88,7 +88,12 @@ JOIN
 	ON a.school = g.school,
 	AvgValues AS av;
 ```
+### Results/Findings 1
 
+The analysis results are summarized as follows:
+
+
+### Data Analysis Code Snippet 2
 ```SQL
 # school demographics vs grades correlation
 WITH AvgValues AS (
@@ -179,3 +184,6 @@ JOIN
 	ON s.dbn = g.school,
 	AvgValues AS av;
 ```
+
+### Results/Findings 2
+The analysis results are summarized as follows:
