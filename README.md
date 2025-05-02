@@ -91,7 +91,10 @@ JOIN
 ### Results/Findings 1
 
 The analysis results are summarized as follows:
-
+1. There is a 33% positive correlation between attendance and English exam proficiency
+2. There is a 36% positive correlation between attendance and Math exam proficiency
+3. Schools and districts will have a high probabilty of raising their percentage of English and Math proficient students by implementing new/stronger actions to get their students to miss less days of school
+4. English and Math proficiencies are relatively equal per school and district  
 
 ### Data Analysis Code Snippet 2
 ```SQL
