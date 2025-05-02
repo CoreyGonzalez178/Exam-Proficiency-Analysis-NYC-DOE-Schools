@@ -25,8 +25,27 @@ https://www.nycenet.edu/
 - PowerBI - Creating Reports ([Download PowerBI here](https://www.microsoft.com/en-us/power-platform/products/power-bi/downloads)
 
 ### Data Cleaning/Preparation
-In the initial data preparation phase, we performed the following tasks:
-- Exporting data from nyc.net each day for daily attendance across all schools. 
-- Data loading and inspection.
-- Data cleaning and formatting.
-- 
+In the initial data preparation phase, I performed the following tasks:
+1. Exporting data from nyc.net each day for daily attendance across all schools
+2. Export of demographic data for all schools and districts
+3. Data loading and inspection.
+4. Data cleaning and formatting.
+
+### Exploratory Data Analysis
+Key questions I was looking to learn about:
+
+- Average attendance across the city?
+- Average attendance by day?
+- Average attendance per borough?
+- Average attendance per district?
+- Average English proficiency for the city?
+- Average Math proficiency for the city?
+- Average English proficiency for each borough?
+- Average Math proficiency for each borough?
+- Average English proficiency for each district?
+- Average Math proficiency for each district?
+- Correlation between average attendance and average English and Math proficiency?	
+- Correlation between attendance and exam score proficiency per school? 
+- Correlation between each race and school attendance per school? (and per district?)
+- Correlation between each race and grade level proficiency per school? (and per district?)
+
