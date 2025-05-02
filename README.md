@@ -52,6 +52,8 @@ Key questions I was looking to learn about:
 ### Data Analysis
 
 ```SQL
+# Calculate Mean, Standard Deviation, Varriance, and Correlation between attendance vs english exam proficiency
+# and attendance vs math exam proficiency
 WITH AvgValues AS (
   SELECT 
     AVG(a.attd) AS avgattd, 
@@ -84,5 +86,96 @@ FROM
 JOIN 
   grade_level_proficiency2 AS g
 	ON a.school = g.school,
+	AvgValues AS av;
+```
+
+```SQL
+# school demographics vs grades correlation
+WITH AvgValues AS (
+  SELECT 
+    AVG(s.percent_female) AS avgpercentfemale,
+    AVG(s.percent_male) AS avgpercentmale,
+    AVG(s.percent_asian) AS avgpercentasian,
+    AVG(s.percent_black) AS avgpercentblack,
+    AVG(s.percent_hispanic) AS avgpercenthispanic,
+    AVG(s.percent_multi_racial) AS avgpercentmultiracial,
+    AVG(s.percent_native_american) AS avgpercentnativeamerican,
+    AVG(s.percent_white) AS avgpercentwhite,
+    AVG(s.percent_students_with_disabilities) AS avgpercentswd,
+    AVG(s.percent_english_language_learners) AS avgpercentell,
+    AVG(g.english_proficiency) AS avgep,
+    AVG(g.math_proficiency) AS avgmp
+  FROM 
+    school_demographics AS s
+  JOIN 
+    grade_level_proficiency2 AS g ON s.dbn = g.school
+)
+
+SELECT 
+    ROUND((SUM((s.percent_female - av.avgpercentfemale) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_female - av.avgpercentfemale), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS female_english_proficiency_correlation,
+    ROUND((SUM((s.percent_female - av.avgpercentfemale) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_female - av.avgpercentfemale), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS female_math_proficiency_correlation,
+    ROUND((SUM((s.percent_male - av.avgpercentmale) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_male - av.avgpercentmale), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS male_english_proficiency_correlation,
+    ROUND((SUM((s.percent_male - av.avgpercentmale) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_male - av.avgpercentmale), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS male_math_proficiency_correlation,
+    ROUND((SUM((s.percent_asian - av.avgpercentasian) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_asian - av.avgpercentasian), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS asian_english_proficiency_correlation,
+    ROUND((SUM((s.percent_asian - av.avgpercentasian) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_asian - av.avgpercentasian), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS asian_math_proficiency_correlation,
+    ROUND((SUM((s.percent_black - av.avgpercentblack) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_black - av.avgpercentblack), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS black_english_proficiency_correlation,
+    ROUND((SUM((s.percent_black - av.avgpercentblack) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_black - av.avgpercentblack), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS black_math_proficiency_correlation,
+    ROUND((SUM((s.percent_hispanic - av.avgpercenthispanic) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_hispanic - av.avgpercenthispanic), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS hispanic_english_proficiency_correlation,
+    ROUND((SUM((s.percent_hispanic - av.avgpercenthispanic) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_hispanic - av.avgpercenthispanic), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS hispanic_math_proficiency_correlation,
+    ROUND((SUM((s.percent_multi_racial - av.avgpercentmultiracial) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_multi_racial - av.avgpercentmultiracial), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS multiracial_english_proficiency_correlation,
+    ROUND((SUM((s.percent_multi_racial - av.avgpercentmultiracial) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_multi_racial - av.avgpercentmultiracial), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS multiracial_math_proficiency_correlation,
+    ROUND((SUM((s.percent_native_american - av.avgpercentnativeamerican) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_native_american - av.avgpercentnativeamerican), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS nativeamerican_english_proficiency_correlation,
+    ROUND((SUM((s.percent_native_american - av.avgpercentnativeamerican) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_native_american - av.avgpercentnativeamerican), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS nativeamerican_math_proficiency_correlation,
+    ROUND((SUM((s.percent_white - av.avgpercentwhite) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_white- av.avgpercentwhite), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS white_english_proficiency_correlation,
+    ROUND((SUM((s.percent_white - av.avgpercentwhite) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_white - av.avgpercentwhite), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS white_math_proficiency_correlation,
+    ROUND((SUM((s.percent_students_with_disabilities - av.avgpercentswd) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_students_with_disabilities- av.avgpercentswd), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS swd_english_proficiency_correlation,
+    ROUND((SUM((s.percent_students_with_disabilities - av.avgpercentswd) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_students_with_disabilities - av.avgpercentswd), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS swd_math_proficiency_correlation,
+    ROUND((SUM((s.percent_english_language_learners - av.avgpercentell) * (g.english_proficiency - av.avgep)) / 
+    (SQRT(SUM(POW((s.percent_english_language_learners- av.avgpercentell), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgep), 2))))), 4) AS ell_english_proficiency_correlation,
+    ROUND((SUM((s.percent_english_language_learners - av.avgpercentell) * (g.math_proficiency - av.avgmp)) / 
+    (SQRT(SUM(POW((s.percent_english_language_learners - av.avgpercentell), 2))) * 
+    SQRT(SUM(POW((g.math_proficiency - av.avgmp), 2))))), 4) AS ell_math_proficiency_correlation
+FROM 
+  school_demographics AS s
+JOIN 
+  grade_level_proficiency2 AS g
+	ON s.dbn = g.school,
 	AvgValues AS av;
 ```
