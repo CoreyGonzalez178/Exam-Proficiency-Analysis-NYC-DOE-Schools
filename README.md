@@ -1,7 +1,7 @@
 # Exam Proficiency Analysis
 
 ### Overview
-This project analyzes data from the New York City Department of Education (NYC DOE) schools and districts. It provides insights into the academic performance and demographic composition of students across various schools and districts. Specifically, the project examines:
+This project analyzes data from the New York City Department of Education (NYC DOE) elementary and middle schools and districts. It provides insights into the academic performance and demographic composition of students across various schools and districts. Specifically, the project examines:
 
 - The percentage of students in each school and district who achieved proficient scores on their year-end exams.
 - The racial demographics of students, highlighting the percentage of students from different racial backgrounds for each school and district.
@@ -10,10 +10,16 @@ This project analyzes data from the New York City Department of Education (NYC D
 By visualizing and interpreting this data, the project aims to offer a comprehensive understanding of the educational landscape in NYC, helping stakeholders make informed decisions to improve educational outcomes.
 
 ### Table of Contents
-
-### Installation
-
-### Usage
+- Overview
+- Data Sources
+- Tools
+- Data Cleaning/Preparation
+- Exploratory Data Analysis
+- Data Analysis Code Snippet 1
+- Data Analysis Code Snippet 2
+- Data Analysis Code Snippet 3
+- Results/Findings
+- Recommendations
 
 ### Data Sources
 New York City Public Schools site: 
@@ -180,6 +186,85 @@ JOIN
 	AvgValues AS av;
 ```
 
+### Data Analysis Code Snippet 3
+```SQL
+# Demographics vs exam proficiency correlation
+WITH AvgValues AS (
+  SELECT 
+    AVG(d.percent_asian) AS avg_percent_asian,
+	AVG(d.percent_black) AS avg_percent_black,
+	AVG(d.percent_hispanic) AS avg_percent_hispanic,
+	AVG(d.percent_multi_racial) AS avg_percent_multi_racial,
+	AVG(d.percent_native_american) AS avg_percent_native_american,
+	AVG(d.percent_white) AS avg_percent_white,
+	AVG(d.percent_students_with_disabilities) AS avg_percent_swd,
+	AVG(d.percent_english_language_learners) AS avg_percent_ell,
+    
+    AVG(g.english_proficiency) AS avgenglishproficiency,
+    AVG(g.math_proficiency) AS avgmathproficiency
+  FROM 
+    school_demographics AS d
+  JOIN 
+    grade_level_proficiency2 AS g ON d.dbn = g.school
+)
+
+SELECT 
+    ROUND((SUM((d.percent_asian - av.avg_percent_asian) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_asian - av.avg_percent_asian), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS asian_english_correlation,
+    ROUND((SUM((d.percent_asian - av.avg_percent_asian) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_asian - av.avg_percent_asian), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS asian_math_correlation,
+    ROUND((SUM((d.percent_black - av.avg_percent_black) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_black - av.avg_percent_black), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS black_english_correlation,
+    ROUND((SUM((d.percent_black - av.avg_percent_black) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_black - av.avg_percent_black), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS black_math_correlation,    
+    ROUND((SUM((d.percent_hispanic - av.avg_percent_hispanic) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_hispanic - av.avg_percent_hispanic), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS hispanic_english_correlation,
+    ROUND((SUM((d.percent_hispanic - av.avg_percent_hispanic) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_hispanic - av.avg_percent_hispanic), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS hispanic_math_correlation,
+    ROUND((SUM((d.percent_multi_racial - av.avg_percent_multi_racial) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_multi_racial - av.avg_percent_multi_racial), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS multi_racial_english_correlation,
+    ROUND((SUM((d.percent_multi_racial - av.avg_percent_multi_racial) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_multi_racial - av.avg_percent_multi_racial), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS multi_racial_math_correlation,  
+    ROUND((SUM((d.percent_native_american - av.avg_percent_native_american) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_native_american - av.avg_percent_native_american), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS native_american_english_correlation,
+    ROUND((SUM((d.percent_native_american - av.avg_percent_native_american) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_native_american - av.avg_percent_native_american), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS native_american_math_correlation,    
+    ROUND((SUM((d.percent_white - av.avg_percent_white) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_white - av.avg_percent_white), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS white_english_correlation,
+    ROUND((SUM((d.percent_white - av.avg_percent_white) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_white - av.avg_percent_white), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS white_math_correlation,       
+    ROUND((SUM((d.percent_students_with_disabilities - av.avg_percent_swd) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_students_with_disabilities - av.avg_percent_swd), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS swd_english_correlation,
+    ROUND((SUM((d.percent_students_with_disabilities - av.avg_percent_swd) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_students_with_disabilities - av.avg_percent_swd), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS swd_math_correlation,    
+    ROUND((SUM((d.percent_english_language_learners - av.avg_percent_ell) * (g.english_proficiency - av.avgenglishproficiency)) / 
+    (SQRT(SUM(POW((d.percent_english_language_learners - av.avg_percent_ell), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS ell_english_correlation,
+    ROUND((SUM((d.percent_english_language_learners - av.avg_percent_ell) * (g.math_proficiency - av.avgmathproficiency)) / 
+    (SQRT(SUM(POW((d.percent_english_language_learners - av.avg_percent_ell), 2))) * 
+    SQRT(SUM(POW((g.english_proficiency - av.avgenglishproficiency), 2))))), 4) AS ell_math_correlation      
+FROM 
+    school_demographics AS d
+JOIN 
+  grade_level_proficiency2 AS g
+	ON d.dbn = g.school,
+	AvgValues AS av;
+```
+
 ### Results/Findings 
 
 1. There is a 33% positive correlation between attendance and English exam proficiency
@@ -188,6 +273,22 @@ JOIN
 4. English and Math proficiencies are relatively equal per school and district
 5. The Bronx is, by far, the lowest performing borough with only 37% of students proficient in English and 36% proficient in Math.
 6. Queens is barely the highest performing borough with a 55% proficiency in English and a 57% proficiency in Math. 
-8. All boroughs have relatively equal attendance rates
-9. The city as a whole has an average daily attendance rate of approximately 89%
-10. 
+7. All boroughs have relatively equal attendance rates
+8. New York City has an average daily rate of approximately 89%
+9. Correlation between each demographic measure and exam proficiency are as follows:
+- Asian:			45% for English, 60% for Math
+- Black:			-36% for English, -49% for Math
+- Hispanic: 			-47% for English, -51% for Math
+- Multi-Racial: 		51% for English, 53% for Math
+- Native American: 		-6% for English, -5% for Math
+- White: 			61% for English, 68% for Math
+- Students with Disabilities:	-44% for English, -54% for Math
+- English Language Learners:	-30% for English, -23% for Math
+10. The data review indicates there is a wide gap between each demographics that would need to be addressed to ensure all students regardless of location or demographics are receiving the same quality education.
+
+### Recommendations
+
+Based on the analysis, schools in disadvantaged communities of NYC should find alternative methods to increase and maintain attendance. Below are some recommended actions:
+
+- Increased parent involvement with positive incentives for parent's to attend parent/teacher conferences and fun school events
+- Increased parent/teacher communication by scheduling routine parent check-in dates
