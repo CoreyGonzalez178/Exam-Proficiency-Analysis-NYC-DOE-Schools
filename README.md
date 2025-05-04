@@ -11,15 +11,15 @@ By visualizing and interpreting this data, the project aims to offer a comprehen
 
 ### Table of Contents
 - [Overview](#Overview)
-- [Data Sources]
-- [Tools]
-- [Data Cleaning/Preparation]
-- [Exploratory Data Analysis]
-- [Data Analysis Code Snippet 1]
-- [Data Analysis Code Snippet 2]
-- [Data Analysis Code Snippet 3]
-- [Results/Findings]
-- [Recommendations]
+- [Data Sources](#Data-Sources)
+- [Tools](#Tools)
+- [Data Cleaning/Preparation](#Data-Cleaning/Preparation)
+- [Exploratory Data Analysis](#Exploratory-Data-Analysis)
+- [Data Analysis Code Snippet 1](#Data-Analysis-Code-Snippet-1)
+- [Data Analysis Code Snippet 2](#Data-Analysis-Code-Snippet-2)
+- [Data Analysis Code Snippet 3](#Data-Analysis-Code-Snippet-3)
+- [Results/Findings](#Results/Findings)
+- [Recommendations](#Recommendations)
 
 ### Data Sources
 New York City Public Schools site: 
