@@ -10,16 +10,16 @@ This project analyzes data from the New York City Department of Education (NYC D
 By visualizing and interpreting this data, the project aims to offer a comprehensive understanding of the educational landscape in NYC, helping stakeholders make informed decisions to improve educational outcomes.
 
 ### Table of Contents
-- Overview
-- Data Sources
-- Tools
-- Data Cleaning/Preparation
-- Exploratory Data Analysis
-- Data Analysis Code Snippet 1
-- Data Analysis Code Snippet 2
-- Data Analysis Code Snippet 3
-- Results/Findings
-- Recommendations
+- [Overview](#Overview)
+- [Data Sources]
+- [Tools]
+- [Data Cleaning/Preparation]
+- [Exploratory Data Analysis]
+- [Data Analysis Code Snippet 1]
+- [Data Analysis Code Snippet 2]
+- [Data Analysis Code Snippet 3]
+- [Results/Findings]
+- [Recommendations]
 
 ### Data Sources
 New York City Public Schools site: 
