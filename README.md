@@ -269,7 +269,7 @@ JOIN
 
 1. There is a 33% positive correlation between attendance and English exam proficiency
 2. There is a 36% positive correlation between attendance and Math exam proficiency
-3. Schools and districts will have a high probabilty of raising their percentage of English and Math proficient students by implementing new/stronger actions to get their students to miss less days of school
+3. Schools and districts will have a high probability of raising their percentage of English and Math proficient students by implementing new/stronger actions to get their students to miss less days of school
 4. English and Math proficiencies are relatively equal per school and district
 5. The Bronx is, by far, the lowest performing borough with only 37% of students proficient in English and 36% proficient in Math.
 6. Queens is barely the highest performing borough with a 55% proficiency in English and a 57% proficiency in Math. 
